@@ -1,0 +1,243 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Camp App Hackathon API",
+        "contact": {
+            "url": "https://camp-app-hackathon.herokuapp.com/"
+        },
+        "version": "1.0"
+    },
+    "servers": [
+        {
+            "url": "http://my-default-host.com",
+            "description": "API документация"
+        }
+    ],
+    "paths": {
+        "/api": {}
+    },
+    "components": {
+        "schemas": {
+            "Admin": {
+                "properties": {
+                    "id": {
+                        "description": "Идентификатор",
+                        "type": "interger"
+                    },
+                    "user": {
+                        "$ref": "#/components/schemas/User"
+                    }
+                },
+                "type": "object"
+            },
+            "Child": {
+                "properties": {
+                    "id": {
+                        "description": "Идентификатор",
+                        "type": "interger"
+                    },
+                    "user": {
+                        "$ref": "#/components/schemas/User"
+                    },
+                    "parent": {
+                        "$ref": "#/components/schemas/User"
+                    },
+                    "points": {
+                        "description": "Баллы за смену",
+                        "type": "integer"
+                    },
+                    "longitude": {
+                        "description": "Долгота",
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "latitude": {
+                        "description": "Широта",
+                        "type": "number",
+                        "format": "float"
+                    }
+                },
+                "type": "object"
+            },
+            "Event": {
+                "properties": {
+                    "id": {
+                        "description": "Идентификатор",
+                        "type": "interger"
+                    },
+                    "title": {
+                        "description": "Название",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "Описание события",
+                        "type": "string"
+                    },
+                    "beginning": {
+                        "description": "Время начала UNIX",
+                        "type": "integer"
+                    },
+                    "ending": {
+                        "description": "Время конца UNIX",
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "EventReview": {
+                "properties": {
+                    "id": {
+                        "description": "Идентификатор",
+                        "type": "interger"
+                    },
+                    "reviewer": {
+                        "$ref": "#/components/schemas/User"
+                    },
+                    "event": {
+                        "$ref": "#/components/schemas/Event"
+                    },
+                    "text": {
+                        "description": "Текст отзыва",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Leader": {
+                "properties": {
+                    "id": {
+                        "description": "Идентификатор",
+                        "type": "interger"
+                    },
+                    "user": {
+                        "$ref": "#/components/schemas/User"
+                    }
+                },
+                "type": "object"
+            },
+            "Operation": {
+                "properties": {
+                    "id": {
+                        "description": "Идентификатор",
+                        "type": "interger"
+                    },
+                    "shop": {
+                        "$ref": "#/components/schemas/Shop"
+                    },
+                    "buyer": {
+                        "$ref": "#/components/schemas/User"
+                    },
+                    "sum": {
+                        "description": "Сумма покупки",
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "created_at": {
+                        "description": "Когда была произведена покупка UNIX",
+                        "type": "interger"
+                    }
+                },
+                "type": "object"
+            },
+            "Parent": {
+                "properties": {
+                    "id": {
+                        "description": "Идентификатор",
+                        "type": "interger"
+                    },
+                    "user": {
+                        "$ref": "#/components/schemas/User"
+                    }
+                },
+                "type": "object"
+            },
+            "Product": {
+                "properties": {
+                    "id": {
+                        "description": "Идентификатор",
+                        "type": "interger"
+                    },
+                    "title": {
+                        "description": "Название",
+                        "type": "string"
+                    },
+                    "price": {
+                        "description": "Цена",
+                        "type": "interger"
+                    },
+                    "description": {
+                        "description": "Описание",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Shop": {
+                "properties": {
+                    "id": {
+                        "description": "Идентификатор",
+                        "type": "interger"
+                    },
+                    "seller": {
+                        "$ref": "#/components/schemas/User"
+                    },
+                    "title": {
+                        "description": "Название",
+                        "type": "string"
+                    },
+                    "category": {
+                        "description": "Катигория",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Staff": {
+                "properties": {
+                    "id": {
+                        "description": "Идентификатор",
+                        "type": "interger"
+                    },
+                    "user": {
+                        "$ref": "#/components/schemas/User"
+                    },
+                    "role": {
+                        "description": "Роль персонала",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "User": {
+                "properties": {
+                    "id": {
+                        "description": "Идентификатор",
+                        "type": "interger"
+                    },
+                    "name": {
+                        "description": "ФИО",
+                        "type": "string"
+                    },
+                    "email": {
+                        "description": "Почта",
+                        "type": "string"
+                    },
+                    "phone": {
+                        "description": "Телефон",
+                        "type": "string"
+                    },
+                    "cash": {
+                        "description": "Счёт",
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "role": {
+                        "description": "Роль",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    }
+}
