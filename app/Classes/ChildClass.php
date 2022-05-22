@@ -56,6 +56,7 @@ class ChildClass
     public array $notes;
     public float $longitude;
     public float $latitude;
+    public int $updated_at;
 
     public function __construct(array $arr, bool $append_notes = true){
         //$this->id = $arr['id'];
@@ -69,7 +70,7 @@ class ChildClass
         $this->longitude = $arr['longitude'];
         $this->latitude = $arr['latitude'];
         $this->notes = [];
-
+        $this->updated_at = strtotime($arr['updated_at']);
         if ($append_notes){
             $notesDB = SanitaryNoteModel::where('child_user_id', $this->user->id)->get();
 

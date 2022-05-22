@@ -15,7 +15,7 @@ body {
 
 .content {
     background-color: #fff;
-    border-radius: 5px;
+    border-radius: 15px;
     padding: 30px 40px;
 
     /* shadow: */
@@ -43,24 +43,26 @@ body {
 
 .table__heading {
     text-align: left;
-    font-size: 12px;
+    font-size: 1.2rem;
     padding: 7px 10px;
     color: #AA7CAA;
 }
 
 .table__data {
-    font-size: 12px;
+    font-size: 1rem;
     color: #666;
     padding: 7px 10px;
 }
 
 .table__heading:first-child,
 .table__data:first-child {
+    font-size: 1rem;
     padding-left: 0;
 }
 
 .table__heading:last-child,
 .table__data:last-child {
+    font-size: 1.2rem;
     padding-right: 0;
 
 }

@@ -1,7 +1,7 @@
 @php
 use Illuminate\Support\Facades\URL;
 /**
-* @var $lines array
+* @var $event_rating array
  */
 @endphp
     <!DOCTYPE html>
@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\URL;
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ URL::asset('public/css/app.css') }}">
 
-    <title>Document</title>
+    <title>Админ - панель</title>
 </head>
 <body>
 <div class="container">
@@ -31,8 +31,10 @@ use Illuminate\Support\Facades\URL;
 
     </div>
     <br>
+    <h1 align="center">АДМИН ПАНЕЛЬ</h1>
+    <br>
     <div class="content">
-        <h3 class="heading">Админ панель - Статистика</h3>
+        <h3 class="heading">Рейтинг мероприятий</h3>
         <!-- table__wrapper for y axis scrolling -->
         <div class="table__wrapper">
             <table class="table">
@@ -46,7 +48,7 @@ use Illuminate\Support\Facades\URL;
                 </tr>
                 </thead>
                 <tbody>
-                @foreach ($lines as $line)
+                @foreach ($event_rating as $line)
                     <tr class="table__row">
                         <td class="table__data">{{$line['event']}}</td>
                         <td class="table__data">{{$line['description']}}</td>
@@ -58,7 +60,61 @@ use Illuminate\Support\Facades\URL;
                 </tbody>
             </table>
         </div>
-    </div>
+    </div><br>
+    <div class="content">
+        <h3 class="heading">Список детей с рейтингом</h3>
+        <!-- table__wrapper for y axis scrolling -->
+        <div class="table__wrapper">
+            <table class="table">
+                <thead>
+                <tr class="table__row">
+                    <th class="table__heading">ФИО ребёнка</th>
+                    <th class="table__heading">Баллы</th>
+                    <th class="table__heading">ФИО родителя</th>
+                    <th class="table__heading">Балланс ребёнка</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach ($child_rating as $line)
+                    <tr class="table__row">
+                        <td class="table__data">{{$line['user']["name"]}}</td>
+                        <td class="table__data">{{$line['points']}}</td>
+                        <td class="table__data">{{$line['parent']["name"]}}</td>
+                        <td class="table__data">{{$line['user']["cash"]}} ₽</td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div><br>
+    <div class="content">
+        <h3 class="heading">Персонал</h3>
+        <!-- table__wrapper for y axis scrolling -->
+        <div class="table__wrapper">
+            <table class="table">
+                <thead>
+                <tr class="table__row">
+                    <th class="table__heading">ФИО работника персонала</th>
+                    <th class="table__heading">Роль</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach ($staff['staff'] as $line)
+                    <tr class="table__row">
+                        <td class="table__data">{{$line['user']['name']}}</td>
+                        <td class="table__data">{{$line['role']}}</td>
+                    </tr>
+                @endforeach
+                @foreach ($staff['leaders'] as $line)
+                    <tr class="table__row">
+                        <td class="table__data">{{$line['user']['name']}}</td>
+                        <td class="table__data">Вожатый</td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div><br>
 </div>
 </body>
 </html>

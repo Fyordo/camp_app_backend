@@ -197,6 +197,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        \App\Providers\AdminPanelServiceProvider::class
+
 
     ],
 
@@ -212,7 +214,7 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        // 'ExampleClass' => App\Example\ExampleClass::class,
+        'AdminPanel' => App\Facades\AdminPanel::class,
     ])->toArray(),
 
 ];

@@ -18,6 +18,7 @@ class ChildModel extends Model
         'points',
         'longitude',
         'latitude',
+        'updated_at'
     ];
 
     protected $visible = [
@@ -27,5 +28,7 @@ class ChildModel extends Model
         'points',
         'longitude',
         'latitude',
+        'created_at',
+        'updated_at',
     ];
 }

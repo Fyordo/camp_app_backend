@@ -64,9 +64,17 @@ class ChildController extends BaseController
         $latitude = \request()->latitude;
 
         $childReq = ChildModel::where('user_id', '=', \request()->header('id'))->first();
+
+        if ($childReq === null){
+            return response()->json([
+                'status' => 'Эта функция доступна только детям!!!'
+            ]);
+        }
+
         $childReq->update([
             'longitude' => $longitude,
             'latitude' => $latitude,
+            'updated_at' => new DateTime()
         ]);
 
         $time = (new DateTime())->getTimestamp();
@@ -85,6 +93,7 @@ class ChildController extends BaseController
 
         if (count($nearby) > 0){
             $nearby[] = new ChildClass($childReq->toArray());
+            $nearby["date"] = $time;
             $base->getReference('bumped')->push($nearby);
         }
 

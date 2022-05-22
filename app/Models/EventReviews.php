@@ -12,14 +12,12 @@ class EventReviews extends Model
     protected $table = 'event_reviews';
 
     protected $fillable = [
-        'reviewer_user_id',
         'event_id',
         'text',
     ];
 
     protected $visible = [
         'id',
-        'reviewer_user_id',
         'event_id',
         'text',
 
