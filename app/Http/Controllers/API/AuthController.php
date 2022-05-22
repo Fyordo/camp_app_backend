@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Classes\UserClass;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Kreait\Laravel\Firebase\Facades\Firebase;
 
 class AuthController extends Controller
 {
@@ -12,7 +13,7 @@ class AuthController extends Controller
         $phone = request()->phone;
 
         if ($phone){
-            $user = User::where('phone', '=', $phone)->first();
+            $user = User::where('users.phone', '=', $phone)->first();
             if ($user){
                 return response()->json(new UserClass($user->toArray()));
             }

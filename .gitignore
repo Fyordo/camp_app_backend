@@ -12,3 +12,5 @@ yarn-error.log
 /.idea
 /.vscode
 .env
+/vendor/
+/resources/campapp-27c42-firebase-adminsdk-3h4dd-9d22f8dd89.json

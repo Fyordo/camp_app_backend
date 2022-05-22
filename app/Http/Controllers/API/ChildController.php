@@ -6,6 +6,8 @@ use App\Classes\ChildClass;
 use App\Classes\UserClass;
 use App\Models\ChildModel;
 use App\Models\User;
+use DateTime;
+use Kreait\Laravel\Firebase\Facades\Firebase;
 
 class ChildController extends BaseController
 {
@@ -61,25 +63,32 @@ class ChildController extends BaseController
         $longitude = \request()->longitude;
         $latitude = \request()->latitude;
 
-        $child = ChildModel::where('user_id', '=', \request()->header('id'))->first();
-        $child->update([
+        $childReq = ChildModel::where('user_id', '=', \request()->header('id'))->first();
+        $childReq->update([
             'longitude' => $longitude,
             'latitude' => $latitude,
         ]);
 
+        $time = (new DateTime())->getTimestamp();
+
         $nearby = [];
+        $base = Firebase::database();
 
         foreach (ChildModel::all() as $child){
             if ($child->user_id != \request()->header('id')){
                 $dist = $this->getDistance($child->longitude, $child->latitude, $longitude, $latitude);
-                if ($dist < 10){
+                if ($dist < 10 && $this->checkTime($time, strtotime($child->updated_at))){
                     $nearby[] = new ChildClass($child->toArray());
                 }
             }
         }
 
+        if (count($nearby) > 0){
+            $nearby[] = new ChildClass($childReq->toArray());
+            $base->getReference('bumped')->push($nearby);
+        }
+
         return response()->json([
-            'children' => $nearby,
             'status' => count($nearby) == 0 ? 'Нет никого рядом' : 'Рядом обнаружены дети'
         ]);
     }
@@ -111,5 +120,14 @@ class ChildController extends BaseController
         $dist = $ad * $EARTH_RADIUS;
 
         return $dist;
+    }
+
+    /**
+     * @param $time1 // Время первого ребёнка
+     * @param $time2 // Время уже записанных детей
+     * @return bool
+     */
+    private function checkTime($time1, $time2): bool{
+        return abs($time1 - $time2) < 10;
     }
 }

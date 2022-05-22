@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\API;
 
 use App\Classes\OperationClass;
+use App\Classes\UserClass;
 use App\Models\ChildModel;
 use App\Models\OperationModel;
+use App\Models\User;
 use DateTime;
 use Illuminate\Http\Request;
 
@@ -60,16 +62,20 @@ class OperationController extends BaseController
 
         for ($i = $start_date; $i < $end_date; $i += 60*60*24){
             $graph[] = [
-                'date' => strtotime(date('d.m.Y', $i)), //TODO сделать Unix
+                'date' => strtotime(date('d.m.Y', $i)),
                 'expense' => 0
             ];
         }
 
+        $user = null;
+
         if ($user_id){
             $collection = OperationModel::where('operations.buyer_id', '=', $user_id)->get();
+            $user = new UserClass(User::where('id', $user_id)->first()->toArray());
         }
         else if ($parent_id){
             $collection = OperationModel::whereIn('buyer_id',  $this->getChildrenIds($parent_id))->get();
+            $user = new UserClass(User::where('id', $parent_id)->first()->toArray());
         }
 
 
@@ -83,7 +89,7 @@ class OperationController extends BaseController
 
         return response()->json([
             'operations' => $objects,
-            'user' => $objects[0]->buyer,
+            'user' => $user,
             'expenses' => $graph
         ]);
     }
